@@ -1,1 +1,41 @@
-<app-todo-list></app-todo-list>
+<div class="container">
+    <h1 class="text-center display-4 mt-5">Etec - Lista de Tarefas</h1>
+    <hr>
+    <form class="col-md-6 mx-auto" #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm)">
+        <div class="mb-4">
+            <label for="task" class="form-label">Tarefa</label>
+            <input type="text" class="form-control" id="task"
+                ngModel name="task" #taskInput="ngModel" required
+                placeholder="Digite a tarefa a ser realizada">
+
+            <small *ngIf="taskInput.invalid && taskInput.dirty" class="text-danger">Campo Obrigatório</small>
+        </div>
+
+        <button [disabled]="taskForm.invalid" type="submit" class="btn btn-primary">
+            Adicionar Tarefa
+        </button>
+    </form>
+
+    <hr>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome da Tarefa</th>
+                <th scope="col">Status</th>
+                <th scope="col">Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of taskArray; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td class="w-75">
+                    <span [class.completed]="task.isCompleted">{{task.taskName}}</span>
+                </td>
+                <td><input type="checkbox" (change)="oncheck(i)" [checked]="task.isCompleted" > Finalizada</td>
+                <td><button class="btn btn-sm btn-danger" (click)="onDelete(i)">Excluir</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
